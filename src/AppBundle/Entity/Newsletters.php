@@ -5,12 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="SalesFlyers")
+ * @ORM\Table(name="Newsletters")
  */
-class SalesFlyers
+class Newsletters
 {
     /**
-     * @ORM\Column(type="integer", options={"default"="nextval('salesflyers_id_seq'::regclass)"})
+     * @ORM\Column(type="integer", options={"default"="nextval('newsletters_id_seq'::regclass)"})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,12 +24,7 @@ class SalesFlyers
     /**
      * @ORM\Column(type="datetime")
      */
-    private $startDate;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $endDate;
+    private $issueDate;
 
     /**
      * Get id
@@ -66,50 +61,26 @@ class SalesFlyers
     }
 
     /**
-     * Set startDate
+     * Set issueDate
      *
-     * @param \DateTime $startDate
+     * @param \DateTime $issueDate
      *
-     * @return SalesFlyers
+     * @return Newsletters
      */
-    public function setStartDate($startDate)
+    public function setIssueDate($issueDate)
     {
-        $this->startDate = $startDate;
+        $this->issueDate = $issueDate;
 
         return $this;
     }
 
     /**
-     * Get startDate
+     * Get issueDate
      *
      * @return \DateTime
      */
-    public function getStartDate()
+    public function getIssueDate()
     {
-        return $this->startDate;
-    }
-
-    /**
-     * Set endDate
-     *
-     * @param \DateTime $endDate
-     *
-     * @return SalesFlyers
-     */
-    public function setEndDate($endDate)
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    /**
-     * Get endDate
-     *
-     * @return \DateTime
-     */
-    public function getEndDate()
-    {
-        return $this->endDate;
+        return $this->issueDate;
     }
 }

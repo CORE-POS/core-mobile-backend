@@ -5,12 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="SalesFlyerPages")
+ * @ORM\Table(name="NewsletterPages")
  */
-class SalesFlyerPages
+class NewsletterPages
 {
     /**
-     * @ORM\Column(type="integer", options={"default"="nextval('salesflyers_id_seq'::regclass)"})
+     * @ORM\Column(type="integer", options={"default"="nextval('newsletterpages_id_seq'::regclass)"})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -18,9 +18,9 @@ class SalesFlyerPages
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="SalesFlyers")
+     * @ORM\ManyToOne(targetEntity="Newsletters")
      */
-    private $salesFlyerID;
+    private $newsletterID;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -35,30 +35,6 @@ class SalesFlyerPages
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set salesFlyerID
-     *
-     * @param integer $salesFlyerID
-     *
-     * @return SalesFlyerPages
-     */
-    public function setSalesFlyerID($salesFlyerID)
-    {
-        $this->salesFlyerID = $salesFlyerID;
-
-        return $this;
-    }
-
-    /**
-     * Get salesFlyerID
-     *
-     * @return integer
-     */
-    public function getSalesFlyerID()
-    {
-        return $this->salesFlyerID;
     }
 
     /**
