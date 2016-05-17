@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -26,6 +27,7 @@ class SalesFlyerPages
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\File(maxSize="6000000")
      */
     private $url;
 

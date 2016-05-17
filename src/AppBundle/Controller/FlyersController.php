@@ -79,6 +79,7 @@ class FlyersController extends Controller
         $pages = new SalesFlyerPages();
         $form = $this->createFormBuilder($pages)
             ->add('salesFlyerID', EntityType::class, ['class'=>'AppBundle:SalesFlyers', 'choice_label'=>'name', 'label'=>'Flyer'])
+            ->add('url', null, ['label'=>'Image File'])
             ->add('save', SubmitType::class, ['label'=>'Add Page'])
             ->getForm();
         $form->handleRequest($request);
