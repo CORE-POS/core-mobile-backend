@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\SalesFlyers;
+use AppBundle\Entity\SalesFlyerPages;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class FlyersController extends Controller
 {
@@ -67,6 +69,21 @@ class FlyersController extends Controller
             200,
             ['Content-type: application/json']
         );
+    }
+
+    /**
+      * @Route("/flyers/pages")
+      */
+    public function addPages(Request $request)
+    {
+        $pages = new SalesFlyerPages();
+        $form = $this->createFormBuilder($pages)
+            ->add('salesFlyerID', EntityType::class, ['class'=>'AppBundle:SalesFlyers', 'choice_label'=>'name', 'label'=>'Flyer'])
+            ->add('save', SubmitType::class, ['label'=>'Add Page'])
+            ->getForm();
+        $form->handleRequest($request);
+        
+        return $this->render('default/flyer.html.twig', ['form'=>$form->createView()]);
     }
 
     /**
