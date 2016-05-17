@@ -1,12 +1,17 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Newsletters;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class NewslettersController extends Controller
 {
@@ -17,6 +22,30 @@ class NewslettersController extends Controller
         $serializer = new Serializer($normalizers, $encoders);
 
         return $serializer->serialize($obj, 'json');
+    }
+
+    /**
+      * @Route("/newsletters/add")
+      */
+    public function addFlyer(Request $request)
+    {
+        $news = new Newsletters();
+
+        $form = $this->createFormBuilder($news)
+            ->add('name', TextType::class)
+            ->add('issueDate', DateType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+
+            return $this->redirectToRoute('app_newsletters_newsletter', ['id'=>$news->getId()]);
+        }
+
+        return $this->render('default/newsletter.html.twig', ['form'=>$form->createView()]);
     }
 
     /**

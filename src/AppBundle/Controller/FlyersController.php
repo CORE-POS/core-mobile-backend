@@ -1,12 +1,18 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\SalesFlyers;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FlyersController extends Controller
 {
@@ -17,6 +23,31 @@ class FlyersController extends Controller
         $serializer = new Serializer($normalizers, $encoders);
 
         return $serializer->serialize($obj, 'json');
+    }
+
+    /**
+      * @Route("/flyers/add")
+      */
+    public function addFlyer(Request $request)
+    {
+        $flyer = new SalesFlyers();
+
+        $form = $this->createFormBuilder($flyer)
+            ->add('name', TextType::class)
+            ->add('startDate', DateType::class)
+            ->add('endDate', DateType::class)
+            ->add('save', SubmitType::class, ['label'=>'Create Flyer'])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($flyer);
+            $em->flush();
+
+            return $this->redirectToRoute('app_flyers_flyer', ['id'=>$flyer->getId()]);
+        }
+
+        return $this->render('default/flyer.html.twig', ['form'=>$form->createView()]);
     }
 
     /**
