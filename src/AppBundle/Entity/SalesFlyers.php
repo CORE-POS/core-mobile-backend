@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SalesFlyers
 {
     /**
-     * @ORM\Column(type="integer", options={"default"="nextval('salesflyers_id_seq'::regclass)"})
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */

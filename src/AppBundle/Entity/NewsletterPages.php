@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class NewsletterPages
 {
     /**
-     * @ORM\Column(type="integer", options={"default"="nextval('newsletterpages_id_seq'::regclass)"})
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
